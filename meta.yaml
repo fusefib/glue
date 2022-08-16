@@ -1,0 +1,20 @@
+package:
+  name: glue
+  version: '0.14'
+source:
+  path: dist
+build:
+  script_env:
+    - DATA_ROOT=$HOME/insiderscore/site
+    - PYBUILD
+requirements:
+  build:
+  - python
+  - setuptools
+  - pillow
+  - jinja2=2.9.6
+  run:
+  - python
+about:
+  license: MIT License
+  summary: python sprite file library
