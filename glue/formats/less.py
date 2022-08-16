@@ -1,12 +1,12 @@
 import os
 
-from css import CssFormat
+from .css import CssFormat
 
 
 class LessFormat(CssFormat):
 
     extension = 'less'
-    template = u"""
+    template = """
         /* glue: {{ version }} hash: {{ hash }} */
         {% for image in images %}.{{ image.label }}{{ image.pseudo }}{%- if not image.last %}, {%- endif %}{%- endfor %}{
             background-image:url('{{ sprite_path }}');

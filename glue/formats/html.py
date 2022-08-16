@@ -5,7 +5,7 @@ from .css import CssFormat
 class HtmlFormat(CssFormat):
 
     extension = 'html'
-    template = u"""
+    template = """
         <html>
             <head><title>Glue Sprite Test Html</title>
             <link rel="stylesheet" type="text/css" href="{{ css_path }}"></head>

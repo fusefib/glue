@@ -7,7 +7,7 @@ import unittest
 import logging
 
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except ImportError:
     from io import StringIO
 
@@ -109,7 +109,7 @@ class TestGlue(unittest.TestCase):
             os.makedirs(dirname)
         image = PILImage.new('RGB', size, color)
         if margin:
-            background = PILImage.new('RGBA', list(map(lambda x: x + margin, size)), margin_color)
+            background = PILImage.new('RGBA', list([x + margin for x in size]), margin_color)
             background.paste(image, tuple(map(int, (margin / 2, margin / 2))))
             background.save(path)
         else:
@@ -141,19 +141,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_source(self):
         self.create_image("simple/red.png", RED)
@@ -166,19 +166,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_output(self):
         self.create_image("simple/red.png", RED)
@@ -191,19 +191,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_quiet(self):
         self.create_image("simple/red.png", RED)
@@ -225,26 +225,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
         self.assertColor("output/simple.png", BLUE, ((0, 64), (63, 127)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 -64px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 -64px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-green',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-green',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_project(self):
         # Empty project
@@ -272,33 +272,33 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/menu.png", YELLOW, ((0, 0), (63, 63)))
         self.assertColor("output/menu.png", GREEN, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/icons.css", u'.sprite-icons-red',
-                       {u'background-image': u"url(icons.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/icons.css", '.sprite-icons-red',
+                       {'background-image': "url(icons.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/icons.css", u'.sprite-icons-blue',
-                       {u'background-image': u"url(icons.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/icons.css", '.sprite-icons-blue',
+                       {'background-image': "url(icons.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/menu.css", u'.sprite-menu-yellow',
-                       {u'background-image': u"url(menu.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/menu.css", '.sprite-menu-yellow',
+                       {'background-image': "url(menu.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/menu.css", u'.sprite-menu-green',
-                       {u'background-image': u"url(menu.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/menu.css", '.sprite-menu-green',
+                       {'background-image': "url(menu.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_project_config_file(self):
 
@@ -336,26 +336,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((64, 64), (127, 127)))
         self.assertColor("output/simple.png", BLUE, ((128, 128), (191, 191)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-yellow',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-yellow',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px -64px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px -64px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-128px -128px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-128px -128px',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_algorithm_horizontal(self):
         self.create_image("simple/red.png", RED)
@@ -370,26 +370,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
         self.assertColor("output/simple.png", BLUE, ((128, 0), (129, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-yellow',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-yellow',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-128px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-128px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_algorithm_horizontal_bottom(self):
         self.create_image("simple/red.png", RED, (64, 64))
@@ -404,26 +404,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((64, 32), (95, 63)))
         self.assertColor("output/simple.png", YELLOW, ((96, 48), (111, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px -32px',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px -32px',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-yellow',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-96px -48px',
-                        u'width': u'16px',
-                        u'height': u'16px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-yellow',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-96px -48px',
+                        'width': '16px',
+                        'height': '16px'})
 
     def test_algorithm_vertical(self):
         self.create_image("simple/red.png", RED)
@@ -438,26 +438,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 64), (63, 127)))
         self.assertColor("output/simple.png", BLUE, ((0, 128), (63, 188)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-yellow',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-yellow',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 -64px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 -64px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 -128px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 -128px',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_algorithm_vertical_right(self):
         self.create_image("simple/red.png", RED, (64, 64))
@@ -472,26 +472,26 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((32, 64), (63, 95)))
         self.assertColor("output/simple.png", YELLOW, ((48, 96), (63, 111)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px -64px',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px -64px',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-yellow',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-48px -96px',
-                        u'width': u'16px',
-                        u'height': u'16px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-yellow',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-48px -96px',
+                        'width': '16px',
+                        'height': '16px'})
 
     def test_no_img_with_img(self):
         self.create_image("simple/red.png", RED)
@@ -502,19 +502,19 @@ class TestGlue(unittest.TestCase):
         self.assertDoesNotExists("output/simple.png")
         self.assertExists("output/simple.css")
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(../folder/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(../folder/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(../folder/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(../folder/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_ordering(self):
         settings = {'crop': False, 'padding': '0', 'margin': '0', 'ratios': [1]}
@@ -565,19 +565,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"styles/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(../output/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("styles/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(../output/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"styles/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(../output/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("styles/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(../output/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_css_validation(self):
         self.create_image("simple/red.png", RED)
@@ -626,19 +626,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.style-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.style-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.style-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.style-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_empty_namespace(self):
         self.create_image("simple/red.png", RED)
@@ -651,19 +651,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_sprite_namespace(self):
         self.create_image("simple/red.png", RED)
@@ -676,19 +676,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-custom-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-custom-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-custom-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-custom-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_sprite_namespace_with_var(self):
         self.create_image("simple/red.png", RED)
@@ -701,19 +701,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-custom-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-custom-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-custom-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-custom-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_empty_sprite_namespace(self):
         self.create_image("simple/red.png", RED)
@@ -726,19 +726,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_empty_namespaces(self):
         self.create_image("simple/red.png", RED)
@@ -751,19 +751,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_url(self):
         self.create_image("simple/red.png", RED)
@@ -776,19 +776,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(http://static.domain.com/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(http://static.domain.com/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(http://static.domain.com/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(http://static.domain.com/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
         code = self.call("glue simple output --url=/static/")
         self.assertEqual(code, 0)
@@ -798,19 +798,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(/static/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(/static/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(/static/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(/static/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
         code = self.call("glue simple --url=/custom/ --css=a/b/c --img=d/e/f")
         self.assertEqual(code, 0)
@@ -820,19 +820,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("d/e/f/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("d/e/f/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"a/b/c/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(/custom/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("a/b/c/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(/custom/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"a/b/c/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(/custom/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("a/b/c/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(/custom/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     @patch('glue.core.Sprite.hash')
     def test_cachebuster(self, mocked_hash):
@@ -847,19 +847,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     @patch('glue.core.Sprite.hash')
     def test_cachebuster_filename(self, mocked_hash):
@@ -874,19 +874,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple_12345.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple_12345.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple_12345.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple_12345.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple_12345.css", '.sprite-simple-red',
+                       {'background-image': "url(simple_12345.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple_12345.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple_12345.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple_12345.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple_12345.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     @patch('glue.core.Sprite.hash')
     def test_cachebuster_filename_only_sprites(self, mocked_hash):
@@ -901,19 +901,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple_12345.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple_12345.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple_12345.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple_12345.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple_12345.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple_12345.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_separator_simple(self):
         self.create_image("simple/red.png", RED)
@@ -926,19 +926,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_separator_camelcase(self):
         self.create_image("simple/red.png", RED)
@@ -951,19 +951,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.spriteSimpleRed',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.spriteSimpleRed',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.spriteSimpleBlue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.spriteSimpleBlue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     @patch('glue.core.Sprite.hash')
     def test_css_template(self, mocked_hash):
@@ -983,7 +983,7 @@ class TestGlue(unittest.TestCase):
 
         with codecs.open('output/simple.css', 'r', 'utf-8-sig') as f:
             content = f.read()
-            self.assertEqual(content, u"custom css template for {0}".format(12345))
+            self.assertEqual(content, "custom css template for {0}".format(12345))
 
     @patch('glue.core.Sprite.hash')
     def test_less_template(self, mocked_hash):
@@ -1003,7 +1003,7 @@ class TestGlue(unittest.TestCase):
 
         with codecs.open('output/simple.less', 'r', 'utf-8-sig') as f:
             content = f.read()
-            self.assertEqual(content, u"custom less template for {0}".format(12345))
+            self.assertEqual(content, "custom less template for {0}".format(12345))
 
     @patch('glue.core.Sprite.hash')
     def test_scss_template(self, mocked_hash):
@@ -1023,7 +1023,7 @@ class TestGlue(unittest.TestCase):
 
         with codecs.open('output/simple.scss', 'r', 'utf-8-sig') as f:
             content = f.read()
-            self.assertEqual(content, u"custom scss template for {0}".format(12345))
+            self.assertEqual(content, "custom scss template for {0}".format(12345))
 
     def test_html(self):
         self.create_image("simple/red.png", RED)
@@ -1093,19 +1093,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("images/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("images/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(../images/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(../images/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(../images/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(../images/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_no_img(self):
         self.create_image("simple/red.png", RED)
@@ -1116,19 +1116,19 @@ class TestGlue(unittest.TestCase):
         self.assertDoesNotExists("output/simple.png")
         self.assertExists("output/simple.css")
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_crop(self):
         self.create_image("simple/red.png", RED, margin=4)
@@ -1141,19 +1141,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_crop_dirty_transparent_images(self):
         WHITE_TRANSPARENT = (255, 255, 255, 0)
@@ -1167,19 +1167,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_padding(self):
         self.create_image("simple/red.png", RED)
@@ -1194,19 +1194,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 4), (67, 67)))
         self.assertColor("output/simple.png", BLUE, ((76, 4), (139, 67)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'72px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '72px',
+                        'height': '72px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-72px 0',
-                        u'width': u'72px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-72px 0',
+                        'width': '72px',
+                        'height': '72px'})
 
         # Double padding
         code = self.call("glue simple output --padding=2,4")
@@ -1218,19 +1218,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((76, 2), (139, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'72px',
-                        u'height': u'68px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '72px',
+                        'height': '68px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-72px 0',
-                        u'width': u'72px',
-                        u'height': u'68px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-72px 0',
+                        'width': '72px',
+                        'height': '68px'})
 
         # Triple padding
         code = self.call("glue simple output --padding=2,4,6")
@@ -1242,19 +1242,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((76, 2), (139, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'72px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '72px',
+                        'height': '72px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-72px 0',
-                        u'width': u'72px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-72px 0',
+                        'width': '72px',
+                        'height': '72px'})
 
         # Full padding
         code = self.call("glue simple output --padding=2,4,6,8")
@@ -1266,19 +1266,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((8, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((84, 2), (147, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'76px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '76px',
+                        'height': '72px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-76px 0',
-                        u'width': u'76px',
-                        u'height': u'72px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-76px 0',
+                        'width': '76px',
+                        'height': '72px'})
 
     def test_margin(self):
         self.create_image("simple/red.png", RED)
@@ -1293,19 +1293,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 4), (67, 67)))
         self.assertColor("output/simple.png", BLUE, ((76, 4), (139, 67)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-4px -4px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-4px -4px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-76px -4px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-76px -4px',
+                        'width': '64px',
+                        'height': '64px'})
 
         # Double margin
         code = self.call("glue simple output --margin=2,4")
@@ -1317,19 +1317,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((76, 2), (139, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-4px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-4px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-76px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-76px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
         # Triple margin
         code = self.call("glue simple output --margin=2,4,6")
@@ -1341,19 +1341,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((4, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((76, 2), (139, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-4px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-4px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-76px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-76px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
         # Full margin
         code = self.call("glue simple output --margin=2,4,6,8")
@@ -1365,19 +1365,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((8, 2), (67, 65)))
         self.assertColor("output/simple.png", BLUE, ((84, 2), (147, 65)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-8px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-8px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-84px -2px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-84px -2px',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_png8(self):
         self.create_image("simple/red.png", RED)
@@ -1395,19 +1395,19 @@ class TestGlue(unittest.TestCase):
         self.assertEqual(image.getpixel((64, 0)), 1)
         self.assertEqual(image.getpixel((127, 63)), 1)
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_retina(self):
 
@@ -1425,39 +1425,39 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple@2x.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple@2x.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple@2x.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple@2x.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple@2x.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple@2x.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
     def test_retina_url(self):
         self.create_image("simple/red.png", RED)
@@ -1474,39 +1474,39 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple@2x.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple@2x.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(http://static.domain.com/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(http://static.domain.com/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(http://static.domain.com/simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(http://static.domain.com/simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(http://static.domain.com/simple@2x.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(http://static.domain.com/simple@2x.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(http://static.domain.com/simple@2x.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(http://static.domain.com/simple@2x.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
     @patch('glue.core.Sprite.hash')
     def test_retina_cachebuster(self, mocked_hash):
@@ -1526,39 +1526,39 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple@2x.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple@2x.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'width': u'32px',
-                        u'height': u'32px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'width': '32px',
+                        'height': '32px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple@2x.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple@2x.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple@2x.png?12345)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-32px 0',
-                        u'background-size': u'64px 32px',
-                        u'-webkit-background-size': u'64px 32px',
-                        u'-moz-background-size': u'64px 32px',
-                        u'width': u'32px',
-                        u'height': u'32px'}, ratio=2)
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple@2x.png?12345)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-32px 0',
+                        'background-size': '64px 32px',
+                        '-webkit-background-size': '64px 32px',
+                        '-moz-background-size': '64px 32px',
+                        'width': '32px',
+                        'height': '32px'}, ratio=2)
 
     def test_cocos2d(self):
         self.create_image("simple/red.png", RED)
@@ -1596,19 +1596,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", RED, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", BLUE, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_sprite_config_files(self):
         self.create_image("simple/red.png", RED)
@@ -1624,19 +1624,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_image_config_files(self):
         self.create_image("simple/red.png", RED)
@@ -1653,19 +1653,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((4, 4), (67, 67)))
         self.assertColor("output/simple.png", RED, ((72, 0), (135, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-blue',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-4px -4px',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-blue',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-4px -4px',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-red',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-72px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-red',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-72px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_pseudo_class(self):
         self.create_image("simple/button.png", RED)
@@ -1678,19 +1678,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button:hover',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button:hover',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_multiple_pseudo_class(self):
         self.create_image("simple/button.png", RED)
@@ -1703,19 +1703,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button:hover:before',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button:hover:before',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_custom_pseudo_class_separator(self):
         self.create_image("simple/button.png", RED)
@@ -1728,19 +1728,19 @@ class TestGlue(unittest.TestCase):
         self.assertColor("output/simple.png", BLUE, ((0, 0), (63, 63)))
         self.assertColor("output/simple.png", RED, ((64, 0), (127, 63)))
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'-64px 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '-64px 0',
+                        'width': '64px',
+                        'height': '64px'})
 
-        self.assertCSS(u"output/simple.css", u'.sprite-simple-button:hover',
-                       {u'background-image': u"url(simple.png)",
-                        u'background-repeat': u'no-repeat',
-                        u'background-position': u'0 0',
-                        u'width': u'64px',
-                        u'height': u'64px'})
+        self.assertCSS("output/simple.css", '.sprite-simple-button:hover',
+                       {'background-image': "url(simple.png)",
+                        'background-repeat': 'no-repeat',
+                        'background-position': '0 0',
+                        'width': '64px',
+                        'height': '64px'})
 
     def test_no_css(self):
         self.create_image("simple/red.png", RED)
