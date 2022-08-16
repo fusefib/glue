@@ -233,16 +233,16 @@ def main(argv=None):
                 manager.process()
         else:
             manager.process()
-    except exceptions.ValidationError, e:
+    except exceptions.ValidationError as e:
         sys.stderr.write(e.args[0])
         return e.error_code
-    except exceptions.SourceImagesNotFoundError, e:
+    except exceptions.SourceImagesNotFoundError as e:
         sys.stderr.write("Error: No images found in %s.\n" % e.args[0])
         return e.error_code
-    except exceptions.NoSpritesFoldersFoundError, e:
+    except exceptions.NoSpritesFoldersFoundError as e:
         sys.stderr.write("Error: No sprites folders found in %s.\n" % e.args[0])
         return e.error_code
-    except exceptions.PILUnavailableError, e:
+    except exceptions.PILUnavailableError as e:
         sys.stderr.write(("Error: PIL {0} decoder is unavailable"
                           "Please read the documentation and "
                           "install it before spriting this kind of "

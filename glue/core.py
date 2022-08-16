@@ -48,7 +48,7 @@ class Image(ConfigurableFromFile):
         with open(self.path, "rb") as img:
             self._image_data = img.read()
 
-        print "\t{0} added to sprite".format(self.filename)
+        print("\t{0} added to sprite".format(self.filename))
 
     @cached_property
     def image(self):
@@ -70,7 +70,7 @@ class Image(ConfigurableFromFile):
                 img.paste(source_image, (0, 0), mask=mask)
             else:
                 img.paste(source_image, (0, 0))
-        except IOError, e:
+        except IOError as e:
             raise PILUnavailableError(e.args[0].split()[1])
         finally:
             imageio.close()
@@ -196,7 +196,7 @@ class Sprite(ConfigurableFromFile):
             if ratio_output_key not in self.config:
                 self.config[ratio_output_key] = img_format.output_path(ratio)
 
-        print "Processing '{0}':".format(self.name)
+        print("Processing '{0}':".format(self.name))
 
         # Generate sprite map
         self.process()
